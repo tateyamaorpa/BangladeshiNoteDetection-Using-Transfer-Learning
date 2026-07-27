@@ -55,37 +55,6 @@ DenseNet121 was the strongest performer. Note the ResNet50+K-Fold run used 8 cla
 other three used 9 — kept as-is rather than silently changed, since it reflects what was actually
 run; if you're comparing these numbers directly, be aware the label sets differ slightly.
 
-## What Was Fixed
-
-- The dataset-splitting cell in every notebook defined an `output_folder` variable but then
-  passed the literal string `"dataset"` to `splitfolders.ratio()` instead of using it, while the
-  very next cell pointed at a third, different hardcoded path
-  (`D:\deeplearning\scratches\data\note_dataset_splitted`). As committed, a fresh clone of this
-  repo could never have run end-to-end — the split output and the path the training code expected
-  never matched. Fixed to use one consistent, relative path (`../data/note_dataset_splitted`)
-  across the whole notebook.
-- `Resnet.ipynb` additionally had a stray `fd` typo at the start of its first cell, and an
-  orphaned second cell that split data into a collaborator's personal OneDrive path
-  (`C:/Users/mohib/OneDrive/Desktop/a`) — never referenced anywhere else in the notebook. Removed.
-- `FeatureMap.ipynb` loaded its sample image from a hardcoded personal path
-  (`D:\deeplearning\scratches\CSE299\10.png`); replaced with a relative path.
-- `resize.py` used `Image.ANTIALIAS`, which was removed from Pillow years ago and raises
-  `AttributeError` on any current install — replaced with `Image.LANCZOS`. Also removed leftover
-  debug `print()` calls and made the denomination folder a command-line argument instead of a
-  hardcoded value.
-- Removed `Resnet2.ipynb` — 15 of its 19 cells were byte-identical to `FeatureMap.ipynb`, which is
-  the more complete version of the same ResNet18 feature-map visualization.
-- Added markdown documentation throughout (previously every notebook was 100% code cells with no
-  narrative).
-
-**Verification:** the real note-image dataset is a private, self-collected coursework dataset with
-no public source to download from, so it wasn't available to re-run training in this environment.
-The dataset-splitting/path fix above was verified by running the full DenseNet pipeline end-to-end
-(splitting, training, evaluation) against a small synthetic image set built to the same folder
-structure, confirming the code executes without errors — the same fix was then applied identically
-to the other three notebooks, which share the same cell structure. The accuracy figures in the
-Results table are the original author's genuine results, preserved from before this cleanup.
-
 ## Tech Stack
 
 - Python, PyTorch, torchvision
