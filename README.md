@@ -73,5 +73,5 @@ run; if you're comparing these numbers directly, be aware the label sets differ 
 
 ## Contributors
 
-- Mohibur Nabil
-- Tateyama Orpa
+- [Mohibur Nabil](https://github.com/mohiburnabil)
+- [Tateyama Orpa](https://github.com/tateyamaorpa)
